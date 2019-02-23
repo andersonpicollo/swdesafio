@@ -5,31 +5,36 @@ import json
 from bson.objectid import ObjectId
 from apps.db import mongo
 
-class Encoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, ObjectId):
-            return str(obj)
-        else:
-            return obj
-
 class Planet(Resource):
   
     
-    def get(self,name):
+    def get(self,name=None,planet_id=None):
 
-        if not name:
-            data = {"response","ERROR"}
-            return jsonify(data)
-        else:
-            try:
+        try:
+            if name:
                 planet = mongo.db.planets.find_one({"name": name})
                 if planet:
-                    return json.dumps(planet, cls=Encoder)
+                    return jsonify(planet)
                 else:
-                    return {"response": "no planet found for {}".format(name)} 
-            except Exception as a:
-                    return {"response":"Exception{}".format(a)}
+                    return jsonify({"response":"Not found"})
             
+            elif planet_id:
+                planet = mongo.db.planets.find_one({"_id": planet_id})
+                if planet:
+                    return jsonify(planet)
+                else:
+                  return jsonify({"response":"Not found"})  
+            else:
+                planets = []
+                planets_db = mongo.db.planets.find({})
+                for planet in planets_db:
+                    planets.append(planet)
+                return jsonify(planets)
+            
+        except Exception as a:
+                    return {"response":"Exception{}".format(a)}
+
+        return jsonify({"response":"Not found"})     
                           
 
     def post(self):
@@ -45,6 +50,7 @@ class Planet(Resource):
             return jsonify(data)
         else:
             planet = {
+                "_id": hash(args['name']),
                 "name": args['name'],
                 "climate" : args['climate'],
                 "terrain" : args['terrain']

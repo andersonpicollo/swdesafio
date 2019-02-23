@@ -1,0 +1,12 @@
+Metadata-Version: 2.1
+Name: swdesafio
+Version: 0.0.0
+Summary: Api REST Python Flask
+Home-page: https://github.com/andersonpicollo/swdesafio
+Author: Anderson Picollo
+Author-email: andersonpicollo@gmail.com
+License: UNKNOWN
+Description: This is an api for SW Universe B2W chalenge
+Keywords: API,REST,Flask,MongoDB
+Platform: UNKNOWN
+Provides-Extra: testing

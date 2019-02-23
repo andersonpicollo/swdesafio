@@ -11,7 +11,7 @@ from .db import mongo
 
 
 def create_app(config_name):
-    app = Flask('api-swdesafio')
+    app = Flask(__name__)
     app.config.from_object(config[config_name])
     app.config["MONGO_URI"] = app.config['MONGODB_HOST']
     
