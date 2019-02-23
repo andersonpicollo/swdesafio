@@ -12,6 +12,9 @@
   <li>[DELETE] /planets/<string:name> => Para excluir um planeta.  </li>
 </ul>
 
+# mongodb
+Collection: planets
+
 
 
 
